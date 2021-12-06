@@ -21,7 +21,10 @@ SOURCES += \
     CMoveList.cpp \
     ai.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    qtboard.cpp \
+    qtcell.cpp \
+    qtscene.cpp
 
 HEADERS += \
     CBoard.h \
@@ -29,7 +32,10 @@ HEADERS += \
     CMoveList.h \
     CSquare.h \
     ai.h \
-    mainwindow.h
+    mainwindow.h \
+    qtboard.h \
+    qtcell.h \
+    qtscene.h
 
 FORMS += \
     mainwindow.ui

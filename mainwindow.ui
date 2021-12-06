@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1130</width>
+    <height>885</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>50</y>
-      <width>261</width>
+      <x>10</x>
+      <y>800</y>
+      <width>961</width>
       <height>31</height>
      </rect>
     </property>
@@ -27,14 +27,24 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>90</y>
-      <width>97</width>
+      <x>980</x>
+      <y>800</y>
+      <width>141</width>
       <height>33</height>
      </rect>
     </property>
     <property name="text">
      <string>Unesi</string>
+    </property>
+   </widget>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>1111</width>
+      <height>791</height>
+     </rect>
     </property>
    </widget>
   </widget>
@@ -43,8 +53,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>29</height>
+     <width>1130</width>
+     <height>20</height>
     </rect>
    </property>
   </widget>

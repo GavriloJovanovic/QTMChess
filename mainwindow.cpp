@@ -13,12 +13,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 
-    connect(
-        ui->pushButton,
-        &QPushButton::clicked,
-        this,
-        &MainWindow::turn
-    );
+    tabla = new QTBoard();
+    s = new QTScene(tabla);
+
+    ui->graphicsView->setScene(s);
+    tabla->drawBoard();
+
+    for(int i = 0; i < 8; i++) {
+        for(int j=0;j<8;j++) {
+            s->addItem(tabla->celije[i][j]);
+            connect(tabla->celije[i][j],&QTCell::clicked,this,&MainWindow::turn);
+        }
+    }
 }
 
 MainWindow::~MainWindow()
@@ -26,25 +32,54 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::addToScene(QTCell *cell) {
+    ui->graphicsView->scene()->addItem(cell);
+}
+
+void MainWindow::refreshBoardSelect() {
+    for(int i = 0; i < 8; i++) {
+        for(int j = 0; j < 8; j++) {
+            tabla->celije[i][j]->refresh();
+        }
+    }
+}
+
 void MainWindow::displayBoard() {
     // Display board
     // We need to make a QT object for this one, but for now it's in the terminal
     std::cout << board;
     std::cout << "Input command : ";
+    refreshBoardSelect();
 }
 
-void MainWindow::turn() {
+void MainWindow::turn(int x, int y) {
     // We shall convert the input of QString
     /*
          std::string str;
          getline(std::cin, str);
          std::cout << std::endl;
     */
+    if(num_click == 0) {
+
+        x1 = vertical[x];
+        y1 = 8 - y;
+        num_click += 1;
+        std::cout << "Selekt" << x1 << " " << y1 << std::endl;
+    }
+    else {
+        x2 = vertical[x];
+        y2 = 8 - y;
+        std::cout << "Move " << x1 << y1 << x2 << y2 << std::endl;
+        num_click = 0;
+
+        /*
         QString inputLine = ui->lineEdit->text();
         ui->lineEdit->clear();
         this->command = inputLine.toStdString();
         std::cout << "You inputed: " << this->command << std::endl;
+        */
 
+        this->command = "move " + x1 + std::to_string(y1) + x2 + std::to_string(y2);
 
 
          // Parse input from player
@@ -62,6 +97,7 @@ void MainWindow::turn() {
              {
                  // Could not parse move.
                  std::cout << "Try again. Use long notation, e.g. e2e4" << std::endl;
+                 refreshBoardSelect();
                  return; // Go back to beginning
              }
 
@@ -73,6 +109,7 @@ void MainWindow::turn() {
                  if (check)
                  {
                      std::cout << "You are in CHECK. Play another move." << std::endl;
+                     refreshBoardSelect();
                      return;
                  }
 
@@ -82,6 +119,7 @@ void MainWindow::turn() {
              else
              {
                  std::cout << "Move " << move << " is not legal." << std::endl;
+                 refreshBoardSelect();
                  return;
              }
          } // end of "move "
@@ -108,7 +146,9 @@ void MainWindow::turn() {
          {
              std::cout << "Unknown command" << std::endl;
              std::cout << "Valid commands are: quit, move, go, show" << std::endl;
+             refreshBoardSelect();
              return;
          }
          this->displayBoard();
+    }
 }
