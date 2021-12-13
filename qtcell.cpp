@@ -10,7 +10,6 @@
 
 QTCell::QTCell(QGraphicsObject* parent,int x,int y) : QGraphicsObject(parent),x(x),y(y)
 {
-
 }
 
 QRectF QTCell::boundingRect() const
@@ -23,6 +22,7 @@ void QTCell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     Q_UNUSED(widget);
     painter->setBrush(color);
     painter->drawRect(0, 0, 80, 80);
+    painter->drawPixmap(0, 0, picture->width(), picture->height(), *picture );
     if(this->number != '0')
     {
         painter->setPen(Qt::red);
@@ -36,6 +36,11 @@ void QTCell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 
     }
 
+}
+
+void QTCell::setPicture(QString imageAdress) {
+    this->picture = new QPixmap(imageAdress);
+    this->update();
 }
 /*
 void Celija::MousePressEvent(QGraphicsSceneMouseEvent * event)
@@ -73,16 +78,16 @@ bool QTCell::event(QEvent* ev)
 void QTCell::setColor(QColor color)
 {
     this->color = color;
+    this->update();
 }
 
 void QTCell::setOriginalColor(QColor originalColor)
 {
     this->originalColor = originalColor;
+    this->update();
 }
 
 void QTCell::refresh() {
-    if (color == Qt::red) {
-        color = originalColor;
-    }
+    this->color = this->originalColor;
     this->update();
 }

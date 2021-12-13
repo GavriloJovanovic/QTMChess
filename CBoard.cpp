@@ -81,6 +81,10 @@ void CBoard::newGame()
     m_material = 0;
 } // end of newGame
 
+std::vector<int8_t> CBoard::getMBoard() {
+    return this->m_board;
+}
+
 /***************************************************************
  * isSquareThreatened
  * Returns true if OTHER side to move threatens this square

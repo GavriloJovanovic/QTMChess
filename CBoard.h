@@ -68,14 +68,15 @@ class CBoard
         bool IsMoveValid(CMove &move) const;
         bool isKingInCheck() const;
         bool isOtherKingInCheck() const;
-
+        std::vector<int8_t> getMBoard();
+        std::vector<int8_t>   m_board;
         friend std::ostream& operator <<(std::ostream &os, const CBoard &rhs);
 
     private:
         bool isSquareThreatened(const CSquare& sq) const;
         void swap_sides() {m_side_to_move = -m_side_to_move;}
 
-        std::vector<int8_t>   m_board;
+
         int m_side_to_move;
         int m_material;
 

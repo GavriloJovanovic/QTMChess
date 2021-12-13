@@ -32,8 +32,10 @@ public:
     void setOriginalColor(QColor originalColor);
     static qint32 cellSideLen() {return 96;}
     char number{'0'};
+    void setPicture(QString imageAdress);
     void refresh();
     int x,y;
+    QPixmap *picture;
     ~QTCell() {}
 private:
     QColor color;

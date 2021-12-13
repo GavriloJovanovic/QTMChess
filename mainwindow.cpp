@@ -37,6 +37,7 @@ void MainWindow::addToScene(QTCell *cell) {
 }
 
 void MainWindow::refreshBoardSelect() {
+    std::cout << "Refreshujem" << std::endl;
     for(int i = 0; i < 8; i++) {
         for(int j = 0; j < 8; j++) {
             tabla->celije[i][j]->refresh();
@@ -47,9 +48,39 @@ void MainWindow::refreshBoardSelect() {
 void MainWindow::displayBoard() {
     // Display board
     // We need to make a QT object for this one, but for now it's in the terminal
-    std::cout << board;
-    std::cout << "Input command : ";
-    refreshBoardSelect();
+    //std::cout << board;
+    static const char pieces[] = "kqrbnp.PNBRQK";
+    static const std::vector<QString> adrese = {
+        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/CrniKralj.png",
+        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/CrnaKraljica.png",
+        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/CrniTop.png",
+        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/CrniLovac.png",
+        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/CrniKonj.png",
+        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/CrniPiun.png",
+        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/PraznoPolje.png",
+        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/BeliPiun.png",
+        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/BeliKonj.png",
+        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/BeliLovac.png",
+        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/BeliTop.png",
+        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/BelaKraljica.png",
+        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/BeliKralj.png"
+
+    };
+    std::vector<int8_t> boardTable = board.getMBoard();
+    for (int row=8, row2 =1; row>=1; --row, ++row2)
+    {
+        for (int col=1, col2 =8; col<=8; ++col, --col2)
+        {
+            int number = (col+1)*10+row;
+            int piece = board.m_board[number];
+            if (piece != IV)
+            {
+                std::cout << pieces[piece+6]  << " ";
+                this->tabla->celije[row - 1][col2-1]->setPicture(adrese[piece+6]);
+            }
+        }
+        std::cout << std::endl;
+    }
 }
 
 void MainWindow::turn(int x, int y) {
@@ -149,6 +180,8 @@ void MainWindow::turn(int x, int y) {
              refreshBoardSelect();
              return;
          }
+
          this->displayBoard();
+         refreshBoardSelect();
     }
 }
