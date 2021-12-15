@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "CBoard.h"
 #include "ai.h"
+#include <QDir>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -48,22 +49,24 @@ void MainWindow::refreshBoardSelect() {
 void MainWindow::displayBoard() {
     // Display board
     // We need to make a QT object for this one, but for now it's in the terminal
-    //std::cout << board;
+    std::cout << board;
     static const char pieces[] = "kqrbnp.PNBRQK";
+    QDir d = QFileInfo("").absoluteDir();
+    QString absolute=d.absolutePath();
     static const std::vector<QString> adrese = {
-        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/CrniKralj.png",
-        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/CrnaKraljica.png",
-        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/CrniTop.png",
-        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/CrniLovac.png",
-        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/CrniKonj.png",
-        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/CrniPiun.png",
-        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/PraznoPolje.png",
-        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/BeliPiun.png",
-        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/BeliKonj.png",
-        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/BeliLovac.png",
-        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/BeliTop.png",
-        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/BelaKraljica.png",
-        "/home/gavrilojovanovic/Desktop/AZRS/QTMChess/Figure/BeliKralj.png"
+        "/../QTMChess/Figure/CrniKralj.png",
+        "/../QTMChess/Figure/CrnaKraljica.png",
+        "/../QTMChess/Figure/CrniTop.png",
+        "/../QTMChess/Figure/CrniLovac.png",
+        "/../QTMChess/Figure/CrniKonj.png",
+        "/../QTMChess/Figure/CrniPiun.png",
+        "/../QTMChess/Figure/PraznoPolje.png",
+        "/../QTMChess/Figure/BeliPiun.png",
+        "/../QTMChess/Figure/BeliKonj.png",
+        "/../QTMChess/Figure/BeliLovac.png",
+        "/../QTMChess/Figure/BeliTop.png",
+        "/../QTMChess/Figure/BelaKraljica.png",
+        "/../QTMChess/Figure/BeliKralj.png"
 
     };
     std::vector<int8_t> boardTable = board.getMBoard();
@@ -75,8 +78,7 @@ void MainWindow::displayBoard() {
             int piece = board.m_board[number];
             if (piece != IV)
             {
-                std::cout << pieces[piece+6]  << " ";
-                this->tabla->celije[row - 1][col2-1]->setPicture(adrese[piece+6]);
+                this->tabla->celije[row - 1][col2-1]->setPicture(absolute + adrese[piece+6]);
             }
         }
         std::cout << std::endl;

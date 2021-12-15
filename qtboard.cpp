@@ -29,8 +29,8 @@ void QTBoard::drawBoard()
             cell->setColor(color);
             cell->setOriginalColor(originalColor);
             if(alt == 1) {
-                cell->setOriginalColor(QColor(256,256,256));
-                cell->setColor(QColor(256,256,256));
+                cell->setOriginalColor(QColor(255,255,255));
+                cell->setColor(QColor(255,255,255));
             } else {
                 cell->setOriginalColor(QColor(128,128,128));
                 cell->setColor(QColor(128,128,128));
