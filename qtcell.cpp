@@ -38,7 +38,8 @@ void QTCell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 
 }
 
-void QTCell::setPicture(QString imageAdress) {
+void QTCell::setPicture(QString imageAdress) { //NAPRAVI DELEETE
+    delete this->picture;
     this->picture = new QPixmap(imageAdress);
     this->update();
 }

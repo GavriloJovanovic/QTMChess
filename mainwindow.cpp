@@ -21,7 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     tabla->drawBoard();
 
     for(int i = 0; i < 8; i++) {
-        for(int j=0;j<8;j++) {
+        int j = 0;
+        for(j=0;j<8;j++) {
             s->addItem(tabla->celije[i][j]);
             connect(tabla->celije[i][j],&QTCell::clicked,this,&MainWindow::turn);
         }

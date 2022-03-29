@@ -35,7 +35,7 @@ public:
     void setPicture(QString imageAdress);
     void refresh();
     int x,y;
-    QPixmap *picture;
+    QPixmap *picture = nullptr;
     ~QTCell() {}
 private:
     QColor color;
