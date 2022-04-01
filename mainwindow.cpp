@@ -54,20 +54,21 @@ void MainWindow::displayBoard() {
     static const char pieces[] = "kqrbnp.PNBRQK";
     QDir d = QFileInfo("").absoluteDir();
     QString absolute=d.absolutePath();
+    std::cout << absolute.toStdString() << std::endl;
     static const std::vector<QString> adrese = {
-        "/../QTMChess/Figure/CrniKralj.png",
-        "/../QTMChess/Figure/CrnaKraljica.png",
-        "/../QTMChess/Figure/CrniTop.png",
-        "/../QTMChess/Figure/CrniLovac.png",
-        "/../QTMChess/Figure/CrniKonj.png",
-        "/../QTMChess/Figure/CrniPiun.png",
-        "/../QTMChess/Figure/PraznoPolje.png",
-        "/../QTMChess/Figure/BeliPiun.png",
-        "/../QTMChess/Figure/BeliKonj.png",
-        "/../QTMChess/Figure/BeliLovac.png",
-        "/../QTMChess/Figure/BeliTop.png",
-        "/../QTMChess/Figure/BelaKraljica.png",
-        "/../QTMChess/Figure/BeliKralj.png"
+        "/../Figure/CrniKralj.png",
+        "/../Figure/CrnaKraljica.png",
+        "/../Figure/CrniTop.png",
+        "/../Figure/CrniLovac.png",
+        "/../Figure/CrniKonj.png",
+        "/../Figure/CrniPiun.png",
+        "/../Figure/PraznoPolje.png",
+        "/../Figure/BeliPiun.png",
+        "/../Figure/BeliKonj.png",
+        "/../Figure/BeliLovac.png",
+        "/../Figure/BeliTop.png",
+        "/../Figure/BelaKraljica.png",
+        "/../Figure/BeliKralj.png"
 
     };
     std::vector<int8_t> boardTable = board.getMBoard();
@@ -79,6 +80,7 @@ void MainWindow::displayBoard() {
             int piece = board.m_board[number];
             if (piece != IV)
             {
+                std::cout << (absolute+adrese[piece+6]).toStdString() << std::endl;
                 this->tabla->celije[row - 1][col2-1]->setPicture(absolute + adrese[piece+6]);
             }
         }
