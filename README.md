@@ -1,6 +1,6 @@
-# QTMChess
+#QTMChess
 Chess, but with QT
 
-Fun game
+           Fun game
 
-Lot's of strategy, and energy consumed.
+               Lot's of strategy, and energy consumed.

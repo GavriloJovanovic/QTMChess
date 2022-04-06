@@ -1,9 +1,6 @@
-﻿---
-BasedOnStyle: Mozilla
-AlignAfterOpenBracket: Align
-AllowShortLoopsOnASingleLine: 'false'
-AlwaysBreakBeforeMultilineStrings: 'true'
-BreakBeforeBraces: Mozilla
-UseTab: Always
+﻿---BasedOnStyle : Mozilla AlignAfterOpenBracket
+    : Align AllowShortLoopsOnASingleLine
+    : 'false' AlwaysBreakBeforeMultilineStrings : 'true' BreakBeforeBraces
+    : Mozilla UseTab : Always
 
-...
+                       ...

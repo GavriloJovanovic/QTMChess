@@ -4,28 +4,27 @@
 #include "qtcell.h"
 #include <QGraphicsItem>
 #include <QGraphicsObject>
-#include <QPainter>
 #include <QGraphicsScene>
+#include <QPainter>
 
-class QTBoard : public QGraphicsObject
-{
+class QTBoard : public QGraphicsObject {
 public:
-    QTBoard();
+  QTBoard();
 
-    QTCell* celije[8][8];
+  QTCell *celije[8][8];
 
-    QRectF boundingRect() const override;
+  QRectF boundingRect() const override;
 
-    void paint(QPainter *painter,
-               const QStyleOptionGraphicsItem *option,
-               QWidget *widget) override;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+             QWidget *widget) override;
 
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
-    void drawBoard();
+  void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+  void drawBoard();
+
 private:
-    QColor color;
-    QColor originalColor;
-    qint32 _x, _y;
+  QColor color;
+  QColor originalColor;
+  qint32 _x, _y;
 };
 
 #endif // QTBOARD_H

@@ -1,47 +1,41 @@
 #include "qtcell.h"
-#include <iostream>
-#include <QGraphicsScene>
-#include <QPainter>
-#include <QStyleOption>
-#include <QString>
 #include <QDrag>
-#include <QMimeData>
+#include <QGraphicsScene>
 #include <QGraphicsSceneEvent>
+#include <QMimeData>
+#include <QPainter>
+#include <QString>
+#include <QStyleOption>
+#include <iostream>
 
-QTCell::QTCell(QGraphicsObject* parent,int x,int y) : QGraphicsObject(parent),x(x),y(y)
-{
+QTCell::QTCell(QGraphicsObject *parent, int x, int y)
+    : QGraphicsObject(parent), x(x), y(y) {}
+
+QRectF QTCell::boundingRect() const { return QRectF(0, 0, 80, 80); }
+
+void QTCell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+                   QWidget *widget) {
+  Q_UNUSED(option);
+  Q_UNUSED(widget);
+  painter->setBrush(color);
+  painter->drawRect(0, 0, 80, 80);
+  painter->drawPixmap(0, 0, picture->width(), picture->height(), *picture);
+  if (this->number != '0') {
+    painter->setPen(Qt::red);
+    painter->setFont(QFont("Segoe UI", 16));
+    painter->drawText(15, 15, QString(this->number));
+
+    //        NumberKnight* tmp = new NumberKnight(1);
+    //        tmp->setPixmap(number);
+    //        tmp->drawNumberKnight();
+    //        this->receiveUnit(tmp);
+  }
 }
 
-QRectF QTCell::boundingRect() const
-{
-    return QRectF(0, 0, 80, 80);
-}
-
-void QTCell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    Q_UNUSED(option);
-    Q_UNUSED(widget);
-    painter->setBrush(color);
-    painter->drawRect(0, 0, 80, 80);
-    painter->drawPixmap(0, 0, picture->width(), picture->height(), *picture );
-    if(this->number != '0')
-    {
-        painter->setPen(Qt::red);
-        painter->setFont(QFont("Segoe UI", 16));
-        painter->drawText(15,15,QString(this->number));
-
-//        NumberKnight* tmp = new NumberKnight(1);
-//        tmp->setPixmap(number);
-//        tmp->drawNumberKnight();
-//        this->receiveUnit(tmp);
-
-    }
-
-}
-
-void QTCell::setPicture(QString imageAdress) { //NAPRAVI DELEETE
-    delete this->picture;
-    this->picture = new QPixmap(imageAdress);
-    this->update();
+void QTCell::setPicture(QString imageAdress) { // NAPRAVI DELEETE
+  delete this->picture;
+  this->picture = new QPixmap(imageAdress);
+  this->update();
 }
 /*
 void Celija::MousePressEvent(QGraphicsSceneMouseEvent * event)
@@ -58,37 +52,33 @@ void Celija::MousePressEvent(QGraphicsSceneMouseEvent * event)
 }
 */
 
-bool QTCell::event(QEvent* ev)
-{
-    if (ev->type() == QEvent::GraphicsSceneMousePress) {
-        if (color == Qt::red) {
-            color = originalColor;
-        }
-        else
-            color = Qt::red;
-        this->update();
+bool QTCell::event(QEvent *ev) {
+  if (ev->type() == QEvent::GraphicsSceneMousePress) {
+    if (color == Qt::red) {
+      color = originalColor;
+    } else
+      color = Qt::red;
+    this->update();
 
-        emit clicked(this->x,this->y);
-        return true;
-    }
-    // Make sure the rest of events are handled
-    // FIX
-
+    emit clicked(this->x, this->y);
     return true;
+  }
+  // Make sure the rest of events are handled
+  // FIX
+
+  return true;
 }
-void QTCell::setColor(QColor color)
-{
-    this->color = color;
-    this->update();
+void QTCell::setColor(QColor color) {
+  this->color = color;
+  this->update();
 }
 
-void QTCell::setOriginalColor(QColor originalColor)
-{
-    this->originalColor = originalColor;
-    this->update();
+void QTCell::setOriginalColor(QColor originalColor) {
+  this->originalColor = originalColor;
+  this->update();
 }
 
 void QTCell::refresh() {
-    this->color = this->originalColor;
-    this->update();
+  this->color = this->originalColor;
+  this->update();
 }

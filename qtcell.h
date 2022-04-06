@@ -4,43 +4,43 @@
 #include <QObject>
 
 #include <QGraphicsItem>
+#include <QObject>
 #include <QPainter>
 #include <QString>
-#include <QObject>
 
-class QTCell : public QGraphicsObject
-{
-    Q_OBJECT
+class QTCell : public QGraphicsObject {
+  Q_OBJECT
 
 signals:
-    void clicked(int x, int y);
-public Q_SLOT:
-    // void MousePressEvent(QGraphicsSceneMouseEvent * event);
+  void clicked(int x, int y);
+public
+  Q_SLOT :
+      // void MousePressEvent(QGraphicsSceneMouseEvent * event);
 
-    bool event(QEvent* ev) override;
+      bool
+      event(QEvent *ev) override;
 
 public:
-    QTCell(QGraphicsObject* parent,int i, int j);
-    QRectF boundingRect() const override;
+  QTCell(QGraphicsObject *parent, int i, int j);
+  QRectF boundingRect() const override;
 
-    void paint(QPainter *painter,
-               const QStyleOptionGraphicsItem *option,
-               QWidget *widget) override;
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+             QWidget *widget) override;
 
+  void setColor(QColor color);
+  void setOriginalColor(QColor originalColor);
+  static qint32 cellSideLen() { return 96; }
+  char number{'0'};
+  void setPicture(QString imageAdress);
+  void refresh();
+  int x, y;
+  QPixmap *picture = nullptr;
+  ~QTCell() {}
 
-    void setColor(QColor color);
-    void setOriginalColor(QColor originalColor);
-    static qint32 cellSideLen() {return 96;}
-    char number{'0'};
-    void setPicture(QString imageAdress);
-    void refresh();
-    int x,y;
-    QPixmap *picture = nullptr;
-    ~QTCell() {}
 private:
-    QColor color;
-    QColor originalColor;
-    QString karakter;
+  QColor color;
+  QColor originalColor;
+  QString karakter;
 };
 
 #endif // QTCELL_H
