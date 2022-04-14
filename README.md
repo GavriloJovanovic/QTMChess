@@ -1,6 +1,4 @@
 #QTMChess
-Chess, but with QT
-
-           Fun game
-
-               Lot's of strategy, and energy consumed.
+Chess, but with QT:
+* fun game
+* has AI that can play for you
