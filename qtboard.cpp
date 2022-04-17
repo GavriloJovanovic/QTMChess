@@ -12,9 +12,9 @@ QRectF QTBoard::boundingRect() const {
 
 void QTBoard::drawBoard() {
   int altPocetak = 1;
-  for (auto i = 0; i < 8; i++) {
+  for (auto i = 0; i <= 8; i++) {
     int alt = altPocetak;
-    for (auto j = 0; j < 8; j++) {
+    for (auto j = 0; j <= 8; j++) {
       // we need to extract information from m_board
       celije[i][j] = new QTCell(this, i, j);
       QTCell *cell = celije[i][j];
