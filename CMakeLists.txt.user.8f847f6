@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.11.0, 2022-04-10T20:54:13. -->
+<!-- Written by QtCreator 4.11.0, 2022-04-10T20:36:23. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{5f48ace8-3c56-4c9c-b878-cd451e2ef8c7}</value>
+  <value type="QByteArray">{8f847f6c-9b20-4a41-9312-b592013bb079}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -55,14 +55,6 @@
  <data>
   <variable>ProjectExplorer.Project.PluginSettings</variable>
   <valuemap type="QVariantMap">
-   <valuemap type="QVariantMap" key="AutoTest.ActiveFrameworks">
-    <value type="bool" key="AutoTest.Framework.Boost">true</value>
-    <value type="bool" key="AutoTest.Framework.GTest">true</value>
-    <value type="bool" key="AutoTest.Framework.QtQuickTest">true</value>
-    <value type="bool" key="AutoTest.Framework.QtTest">true</value>
-   </valuemap>
-   <value type="int" key="AutoTest.RunAfterBuild">0</value>
-   <value type="bool" key="AutoTest.UseGlobal">true</value>
    <valuelist type="QVariantList" key="ClangCodeModel.CustomCommandLineKey"/>
    <value type="bool" key="ClangCodeModel.UseGlobalConfig">true</value>
    <valuemap type="QVariantMap" key="ClangTools">
@@ -83,8 +75,8 @@
   <valuemap type="QVariantMap">
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Desktop</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{f289efa8-a50e-4da7-add7-bd657c663d87}</value>
-   <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">3</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{e89cb57f-68f2-4cbf-aab6-337acc390ae4}</value>
+   <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">

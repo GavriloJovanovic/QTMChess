@@ -11,8 +11,10 @@
 QTCell::QTCell(QGraphicsObject *parent, int x, int y)
     : QGraphicsObject(parent), x(x), y(y) {}
 
+//! Defenition of size for each cell
 QRectF QTCell::boundingRect() const { return QRectF(0, 0, 80, 80); }
 
+//! Painting each cell on it's own position acordingly
 void QTCell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                    QWidget *widget) {
   Q_UNUSED(option);
@@ -32,6 +34,7 @@ void QTCell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
   }
 }
 
+//!Method that puts figures on the positon
 void QTCell::setPicture(QString imageAdress) { // NAPRAVI DELEETE
   delete this->picture;
   this->picture = new QPixmap(imageAdress);
@@ -52,6 +55,7 @@ void Celija::MousePressEvent(QGraphicsSceneMouseEvent * event)
 }
 */
 
+//! What is happening when we click on the cell in exact postion
 bool QTCell::event(QEvent *ev) {
   if (ev->type() == QEvent::GraphicsSceneMousePress) {
     if (color == Qt::red) {
@@ -68,16 +72,21 @@ bool QTCell::event(QEvent *ev) {
 
   return true;
 }
+
+//! Method for seting color
 void QTCell::setColor(QColor color) {
   this->color = color;
   this->update();
 }
 
+
+//! Revert to original color of each cells, it's eather gray or white
 void QTCell::setOriginalColor(QColor originalColor) {
   this->originalColor = originalColor;
   this->update();
 }
 
+//! Refresh cell to it's original color
 void QTCell::refresh() {
   this->color = this->originalColor;
   this->update();

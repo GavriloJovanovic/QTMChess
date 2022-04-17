@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <iostream>
 
+//! Main loop function, that is the core of the project
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ai(board), ui(new Ui::MainWindow) {
   ui->setupUi(this);
@@ -25,12 +26,14 @@ MainWindow::MainWindow(QWidget *parent)
   }
 }
 
+//! Destructor
 MainWindow::~MainWindow() { delete ui; }
 
 void MainWindow::addToScene(QTCell *cell) {
   ui->graphicsView->scene()->addItem(cell);
 }
 
+//! Method that helps out board to be unselected
 void MainWindow::refreshBoardSelect() {
   std::cout << "Refreshujem" << std::endl;
   for (int i = 0; i < 8; i++) {
@@ -40,6 +43,7 @@ void MainWindow::refreshBoardSelect() {
   }
 }
 
+//! Method that is displaying the figuere on the board
 void MainWindow::displayBoard() {
   // Display board
   // We need to make a QT object for this one, but for now it's in the terminal
@@ -74,6 +78,7 @@ void MainWindow::displayBoard() {
   }
 }
 
+//! Main core function of out project that we took from the open source project, it is the main function that is the infinite loop of players choices
 void MainWindow::turn(int x, int y) {
   // We shall convert the input of QString
   /*

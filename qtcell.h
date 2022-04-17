@@ -12,6 +12,8 @@ class QTCell : public QGraphicsObject {
   Q_OBJECT
 
 signals:
+    //!Signal for clicked cell,
+    //!@param x @param y are postion of cell
   void clicked(int x, int y);
 public
   Q_SLOT :
@@ -29,11 +31,14 @@ public:
 
   void setColor(QColor color);
   void setOriginalColor(QColor originalColor);
+  //! Lentht of each cell
   static qint32 cellSideLen() { return 96; }
   char number{'0'};
   void setPicture(QString imageAdress);
   void refresh();
+  //! Position of our cell
   int x, y;
+  //! Picture that is attached to certan cell
   QPixmap *picture = nullptr;
   ~QTCell() {}
 

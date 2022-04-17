@@ -10,6 +10,7 @@ QRectF QTBoard::boundingRect() const {
   return QRectF(0, 0, QTCell::cellSideLen() * 8, QTCell::cellSideLen() * 8);
 }
 
+//! Method that sets out board with current position and looks for the display of cells
 void QTBoard::drawBoard() {
   int altPocetak = 1;
   for (auto i = 0; i < 8; i++) {
@@ -35,6 +36,7 @@ void QTBoard::drawBoard() {
   }
 }
 
+//! Coloring of board
 void QTBoard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                     QWidget *) {
   Q_UNUSED(option)
@@ -43,6 +45,7 @@ void QTBoard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
   painter->drawRect(0, 0, QTCell::cellSideLen() * 8, QTCell::cellSideLen() * 8);
 }
 
+//!Event for board that is happening when we click on cell, it turns red!
 void QTBoard::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
   Q_UNUSED(event)
