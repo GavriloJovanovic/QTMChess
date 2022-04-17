@@ -3,6 +3,15 @@
 
 #include "CMove.h"
 
+
+bool CMove::WK_moved = false;
+bool CMove::WRL_moved = false;
+bool CMove::WRR_moved = false;
+bool CMove::BK_moved = false;
+bool CMove::BRL_moved = false;
+bool CMove::BRR_moved = false;
+
+
 std::ostream &operator<<(std::ostream &os, const CMove &rhs) {
   return os << rhs.ToShortString();
 } // end of std::ostream& operator <<(std::ostream &os, const CMove &rhs)
