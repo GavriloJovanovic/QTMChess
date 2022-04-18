@@ -5,18 +5,10 @@ on:
     branches: [ GJ-branch ]
 
 jobs:
-  super-lint:
-    name: Lint code base
+  GJ-branch-CI:
     runs-on: ubuntu-lates
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2 #Preuzimanje svih datoteka sa repo-a
-        with:
-          fetch-depth: 0
-          
-      - name: Lint code base
-        uses: github/super-linter@v3
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: GJ-branch
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: echo
+        run: echo "I am working!"
+    
+
