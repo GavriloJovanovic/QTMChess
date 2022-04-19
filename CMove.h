@@ -63,6 +63,8 @@ public:
 
   bool        m_castle;
   static bool WK_moved,WRL_moved,WRR_moved,BK_moved,BRL_moved,BRR_moved;
+  static bool en_passant_ready,en_passant_played;
+  static int en_passant_square;
 
 private:
   CSquare m_from;

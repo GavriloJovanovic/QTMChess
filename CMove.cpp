@@ -11,6 +11,11 @@ bool CMove::BK_moved = false;
 bool CMove::BRL_moved = false;
 bool CMove::BRR_moved = false;
 
+bool CMove::en_passant_ready = false;
+bool CMove::en_passant_played = false;
+int CMove::en_passant_square = -1;
+
+
 
 std::ostream &operator<<(std::ostream &os, const CMove &rhs) {
   return os << rhs.ToShortString();
