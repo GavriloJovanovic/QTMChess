@@ -4,6 +4,6 @@ Chess, but with QT:
 * nice looking
 
 Devs:
-* Katarina Nikolic
-* Vukasin Radic
-* Gavrilo Jovanovic
+* Katarina Nikolić
+* Vukašin Radić
+* Gavrilo Jovanović
