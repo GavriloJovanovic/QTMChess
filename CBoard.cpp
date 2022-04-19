@@ -307,6 +307,15 @@ void CBoard::find_legal_moves(CMoveList &moves) const {
             moves.push_back(move);
           }
         }
+
+        // En passant
+
+        if (i>=61 && i<=68 && (i-1 == CMove::en_passant_square || i+1 == CMove::en_passant_square))
+        {
+            CMove move(piece, i, CMove::en_passant_square +10, EM);
+            moves.push_back(move);
+        }
+
         break;
 
       case WN: // White knight
@@ -534,6 +543,16 @@ void CBoard::find_legal_moves(CMoveList &moves) const {
             moves.push_back(move);
           }
         }
+
+        // En passant
+
+        if (i>=51 && i<=58 && (i-1 == CMove::en_passant_square || i+1 == CMove::en_passant_square))
+        {
+            CMove move(piece, i, CMove::en_passant_square -10, EM);
+            moves.push_back(move);
+        }
+
+
         break;
 
       case BN: // Black knight
@@ -731,12 +750,29 @@ void CBoard::make_move(const CMove &move) {
       }
   }
 
+
+
   m_board[move.m_to] = m_board[move.m_from];
   if (move.m_promoted != EM)
     m_board[move.m_to] = move.m_promoted;
   m_board[move.m_from] = EM;
   m_side_to_move = -m_side_to_move;
   m_material = -m_material;
+
+
+  if (CMove::en_passant_played)
+  {
+      m_board[CMove::en_passant_square] = EM;
+
+
+      CMove::en_passant_ready = false;
+      CMove::en_passant_played = false;
+      CMove::en_passant_square = -1;
+  }
+
+
+
+
 } // end of void CBoard::make_move(const CMove &move)
 
 /***************************************************************
@@ -822,6 +858,39 @@ bool CBoard::IsMoveValid(CMove &move) const {
            CMove::BRL_moved = true;
       if (move.m_from == H8 && move.m_piece == BR && CMove::BRR_moved != true )
            CMove::BRR_moved = true;
+
+      if (move.m_piece == WP && move.m_to.row() == 4 && move.m_from.row() == 2 )
+      {
+          CMove::en_passant_square = move.m_to;
+          CMove::en_passant_ready = true;
+      }
+      else if (move.m_piece == BP && move.m_to.row() == 5  && move.m_from.row() == 7)
+      {
+          CMove::en_passant_square = move.m_to;
+          CMove::en_passant_ready = true;
+      }
+
+
+      else if (move.m_piece == WP && move.m_from.row()==5 && move.m_to == CMove::en_passant_square+10 &&  CMove::en_passant_ready)
+      {
+          CMove::en_passant_played = true;
+      }
+      else if (move.m_piece == BP && move.m_from.row()==4 && move.m_to == CMove::en_passant_square-10 &&  CMove::en_passant_ready)
+      {
+          CMove::en_passant_played = true;
+      }
+      else
+      {
+          CMove::en_passant_square = -1;
+          CMove::en_passant_ready = false;
+          CMove::en_passant_played = false;
+
+      }
+
+
+
+
+
       return true;
     }
   }
