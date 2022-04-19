@@ -414,6 +414,23 @@ void CBoard::find_legal_moves(CMoveList &moves) const {
             }
         }
 
+        //Short white castle
+
+        if (!CMove::WRR_moved && !CMove::WK_moved && m_board[F1] == EM && m_board[G1] == EM && !isKingInCheck() && !isSquareThreatened(F1) && !isSquareThreatened(G1) )
+        {
+            CMove move(piece, E1, G1,EM,EM,true);
+            moves.push_back(move);
+        }
+
+        // Long white castle
+
+        if (!CMove::WRL_moved && !CMove::WK_moved && m_board[B1] == EM && m_board[C1] == EM && m_board[D1] == EM && !isKingInCheck() && !isSquareThreatened(C1) && !isSquareThreatened(D1))
+        {
+            CMove move(piece, E1, C1,EM,EM,true);
+            moves.push_back(move);
+        }
+
+
       }
 
       break;
@@ -624,6 +641,23 @@ void CBoard::find_legal_moves(CMoveList &moves) const {
             }
         }
 
+        //Short black castle
+
+        if (!CMove::BRR_moved && !CMove::BK_moved && m_board[F8] == EM && m_board[G8] == EM && !isKingInCheck() && !isSquareThreatened(F8) && !isSquareThreatened(G8))
+        {
+            CMove move(piece, E8, G8,EM,EM,true);
+            moves.push_back(move);
+        }
+
+        // Long black castle
+
+        if (!CMove::BRL_moved && !CMove::BK_moved &&  m_board[B8] == EM && m_board[C8] == EM && m_board[D8] == EM && !isKingInCheck() && !isSquareThreatened(C8) && !isSquareThreatened(D8))
+        {
+            CMove move(piece, E8, C8,EM,EM,true);
+            moves.push_back(move);
+        }
+
+
       }
 
       break;
@@ -683,6 +717,18 @@ void CBoard::make_move(const CMove &move) {
     break;
   default:
     break;
+  }
+
+  if (move.m_castle)
+  {
+      switch (move.m_to)
+      {
+          case G1 : m_board[F1] = WR; m_board[H1] = EM; break;
+          case C1 : m_board[D1] = WR; m_board[A1] = EM; break;
+          case G8 : m_board[F8] = BR; m_board[H8] = EM; break;
+          case C8 : m_board[D8] = BR; m_board[A8] = EM; break;
+
+      }
   }
 
   m_board[move.m_to] = m_board[move.m_from];
@@ -762,6 +808,20 @@ bool CBoard::IsMoveValid(CMove &move) const {
     if (moves[i] == move) {
       move.m_piece = m_board[move.m_from];
       move.m_captured = m_board[move.m_to];
+      move.m_castle = moves[i].m_castle;
+
+      if (move.m_piece == WK && CMove::WK_moved != true )
+           CMove::WK_moved = true;
+      if (move.m_from == A1 && move.m_piece == WR && CMove::WRL_moved != true )
+           CMove::WRL_moved = true;
+      if (move.m_from == H1 && move.m_piece == WR && CMove::WRR_moved != true )
+           CMove::WRR_moved = true;
+      if (move.m_piece == BK && CMove::BK_moved != true )
+           CMove::BK_moved = true;
+      if (move.m_from == A8 && move.m_piece == BR && CMove::BRL_moved != true )
+           CMove::BRL_moved = true;
+      if (move.m_from == H8 && move.m_piece == BR && CMove::BRR_moved != true )
+           CMove::BRR_moved = true;
       return true;
     }
   }

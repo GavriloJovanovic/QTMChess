@@ -31,14 +31,14 @@ public:
   friend std::ostream &operator<<(std::ostream &os, const CMove &rhs);
 
   // Constructors
-  CMove() : m_piece(IV), m_captured(IV) {}
+  CMove() : m_piece(IV), m_captured(IV),m_castle(false) {}
 
-  CMove(const char *str) : m_captured(IV) { FromString(str); }
+  CMove(const char *str) : m_captured(IV),m_castle(false) { FromString(str); }
 
-  CMove(int8_t piece, const CSquare &from, const CSquare &to,
-        int8_t captured = EM, int8_t promoted = EM)
-      : m_from(from), m_to(to), m_piece(piece), m_captured(captured),
-        m_promoted(promoted) {}
+  CMove(int8_t piece, const CSquare& from, const CSquare& to, int8_t captured = EM, int8_t promoted=EM,bool castle=false) :
+      m_from(from), m_to(to), m_piece(piece), m_captured(captured), m_promoted(promoted), m_castle(castle) {}
+
+
 
   const char *FromString(const char *s); // Returns NULL if error
 
@@ -60,6 +60,9 @@ public:
       return false;
     return true;
   }
+
+  bool        m_castle;
+  static bool WK_moved,WRL_moved,WRR_moved,BK_moved,BRL_moved,BRR_moved;
 
 private:
   CSquare m_from;
