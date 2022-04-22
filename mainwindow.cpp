@@ -69,7 +69,7 @@ void MainWindow::displayBoard() {
       int number = (col + 1) * 10 + row;
       int piece = board.m_board[number];
       if (piece != IV) {
-        std::cout << (absolute + adrese[piece + 6]).toStdString() << std::endl;
+        //std::cout << (absolute + adrese[piece + 6]).toStdString() << std::endl;
         this->tabla->celije[row - 1][col2 - 1]->setPicture(absolute +
                                                            adrese[piece + 6]);
       }
@@ -86,12 +86,17 @@ void MainWindow::turn(int x, int y) {
        getline(std::cin, str);
        std::cout << std::endl;
   */
+
+
+
+
   if (num_click == 0) {
+
 
     x1 = vertical[x];
     y1 = 8 - y;
     num_click += 1;
-    std::cout << "Selekt" << x1 << " " << y1 << std::endl;
+    std::cout << "Select" << x1 << " " << y1 << std::endl;
   } else {
     x2 = vertical[x];
     y2 = 8 - y;
@@ -126,15 +131,18 @@ void MainWindow::turn(int x, int y) {
       if (board.IsMoveValid(move)) {
         board.make_move(move);
         bool check = board.isOtherKingInCheck();
-        board.undo_move(move);
+
         if (check) {
+          board.undo_move(move);
           std::cout << "You are in CHECK. Play another move." << std::endl;
           refreshBoardSelect();
           return;
         }
 
         std::cout << "You move : " << move << std::endl;
-        board.make_move(move);
+
+
+
       } else {
         std::cout << "Move " << move << " is not legal." << std::endl;
         refreshBoardSelect();
@@ -167,5 +175,25 @@ void MainWindow::turn(int x, int y) {
 
     this->displayBoard();
     refreshBoardSelect();
+
+    if (CBoard::checkmate && (board.isKingInCheck() || board.isOtherKingInCheck()))
+
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Checkmate.");
+        msgBox.exec();
+    }
+
+    else if(CBoard::checkmate)
+    {
+
+        QMessageBox msgBox;
+        msgBox.setText("STALEMATE");
+        msgBox.exec();
+    }
+
+
+
+
   }
 }

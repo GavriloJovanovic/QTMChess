@@ -4,6 +4,8 @@
 #include "CMove.h"
 #include "CMoveList.h"
 
+#include <QMessageBox>
+
 #ifndef _C_BOARD_H_
 #define _C_BOARD_H_
 
@@ -80,6 +82,8 @@ public:
   std::vector<int8_t> getMBoard();
   std::vector<int8_t> m_board;
   friend std::ostream &operator<<(std::ostream &os, const CBoard &rhs);
+
+  static bool checkmate_check,checkmate;
 
 private:
   bool isSquareThreatened(const CSquare &sq) const;

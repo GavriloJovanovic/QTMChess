@@ -1,10 +1,14 @@
 #include "CBoard.h"
 #include <assert.h>
+#include <QMessageBox>
 
 // Create nice colours in the console output
 #define TTY_YELLOW "[33m"
 #define TTY_BLUE "[34m"
 #define TTY_NORM "[0m"
+
+bool CBoard::checkmate_check= false;
+bool CBoard::checkmate = false;
 
 /***************************************************************
  * operator <<
@@ -692,6 +696,7 @@ void CBoard::find_legal_moves(CMoveList &moves) const {
  * This updates the board according to the move
  ***************************************************************/
 void CBoard::make_move(const CMove &move) {
+
   switch (move.m_captured) {
   case WP:
   case BP:
@@ -750,16 +755,6 @@ void CBoard::make_move(const CMove &move) {
       }
   }
 
-
-
-  m_board[move.m_to] = m_board[move.m_from];
-  if (move.m_promoted != EM)
-    m_board[move.m_to] = move.m_promoted;
-  m_board[move.m_from] = EM;
-  m_side_to_move = -m_side_to_move;
-  m_material = -m_material;
-
-
   if (CMove::en_passant_played)
   {
       m_board[CMove::en_passant_square] = EM;
@@ -770,6 +765,50 @@ void CBoard::make_move(const CMove &move) {
       CMove::en_passant_square = -1;
   }
 
+
+
+  m_board[move.m_to] = m_board[move.m_from];
+  if (move.m_promoted != EM)
+    m_board[move.m_to] = move.m_promoted;
+  m_board[move.m_from] = EM;
+  m_side_to_move = -m_side_to_move;
+  m_material = -m_material;
+
+
+
+  // Checkmate/Stalemate check
+
+  if(!CBoard::checkmate_check)
+  {
+
+    CBoard::checkmate_check = true;
+
+
+  CMoveList moves;
+  find_legal_moves(moves);
+  CBoard::checkmate = true;
+
+
+  for (unsigned int i = 0; i < moves.size(); ++i)
+  {
+      make_move(moves[i]);
+
+      if (!isOtherKingInCheck()) // not checkmate
+      {
+           CBoard::checkmate = false;
+           undo_move(moves[i]);
+           CBoard::checkmate_check = false;
+           break;
+      }
+
+
+      undo_move(moves[i]);
+
+  }
+
+
+
+   }
 
 
 
@@ -840,6 +879,7 @@ void CBoard::undo_move(const CMove &move) {
 bool CBoard::IsMoveValid(CMove &move) const {
   CMoveList moves;
   find_legal_moves(moves);
+
   for (unsigned int i = 0; i < moves.size(); ++i) {
     if (moves[i] == move) {
       move.m_piece = m_board[move.m_from];
