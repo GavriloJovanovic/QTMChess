@@ -23,9 +23,11 @@ MainWindow::MainWindow(QWidget *parent)
       s->addItem(tabla->celije[i][j]);
       connect(tabla->celije[i][j], &QTCell::clicked, this, &MainWindow::turn);
     }
-  }
-}
 
+
+}
+  connect(ui->buttonGo, &QPushButton::clicked, this, &MainWindow::bestMove);
+}
 //! Destructor
 MainWindow::~MainWindow() { delete ui; }
 
@@ -186,14 +188,22 @@ void MainWindow::turn(int x, int y) {
 
     else if(CBoard::checkmate)
     {
-
         QMessageBox msgBox;
         msgBox.setText("STALEMATE");
         msgBox.exec();
     }
+}
 
+}
 
+void MainWindow::bestMove(){
 
+    CMove best_move = ai.find_best_move();
 
-  }
+    std::cout << "bestmove " << best_move << std::endl;
+
+    board.make_move(best_move);
+
+    this->displayBoard();
+    refreshBoardSelect();
 }

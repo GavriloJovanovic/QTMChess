@@ -17,8 +17,9 @@ QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
-public
-  Q_SLOT : void turn(int x, int y);
+public slots :
+  void turn(int x, int y);
+  void bestMove();
 
 public:
   MainWindow(QWidget *parent = nullptr);

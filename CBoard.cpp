@@ -870,6 +870,10 @@ void CBoard::undo_move(const CMove &move) {
   m_board[move.m_to] = move.m_captured;
   m_side_to_move = -m_side_to_move;
 
+  if (CBoard::checkmate) {
+      CBoard::checkmate = false;
+  }
+
 } // end of void CBoard::undo_move(const CMove &move)
 
 /***************************************************************
