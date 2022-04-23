@@ -5,6 +5,8 @@
 #include <QDir>
 #include <cstdlib>
 #include <iostream>
+#include <QInputDialog>
+#include <QStringList>
 
 //! Main loop function, that is the core of the project
 MainWindow::MainWindow(QWidget *parent)
@@ -23,8 +25,6 @@ MainWindow::MainWindow(QWidget *parent)
       s->addItem(tabla->celije[i][j]);
       connect(tabla->celije[i][j], &QTCell::clicked, this, &MainWindow::turn);
     }
-
-
 }
   connect(ui->buttonGo, &QPushButton::clicked, this, &MainWindow::bestMove);
   connect(ui->buttonNewGame, &QPushButton::clicked, this, &MainWindow::newGame);
@@ -115,12 +115,6 @@ void MainWindow::turn(int x, int y) {
 
     this->command = "move " + x1 + std::to_string(y1) + x2 + std::to_string(y2);
 
-    // Parse input from player
-    if (this->command == "quit") {
-      exit(1);
-      return;
-    }
-
     if (this->command.compare(0, 5, "move ") == 0) {
       CMove move;
 
@@ -132,6 +126,39 @@ void MainWindow::turn(int x, int y) {
       }
 
       if (board.IsMoveValid(move)) {
+
+          if(board.getSideToMove() == 1 && move.To().row() == 8 && move.Piece() == 1) {
+              board.undo_move(move);
+              QStringList promotionPieces;
+              promotionPieces << tr("Queen") << tr("Rook") << tr("Knight") << tr("Bishop");
+              bool ok;
+              QString piece = QInputDialog::getItem(this, tr("Promotion"), tr("Select piece to promote to:"), promotionPieces, 0, false, &ok);
+              char piece_std = piece.toStdString().c_str()[0];
+              std::string piece_mv;
+              switch(piece_std){
+                  case 'Q':
+                      piece_mv = 'q';
+                      break;
+                  case 'R':
+                      piece_mv = 'r';
+                      break;
+                  case 'K':
+                      piece_mv = 'n';
+                      break;
+                  case 'B':
+                      piece_mv = 'b';
+                      break;
+                  default:
+                      piece_mv = '0';
+              }
+
+              this->command += piece_mv;
+              std::cout << this->command << std::endl;
+              if(move.FromString(this->command.c_str() + 5) == NULL){
+                  std::cout << "ne valja potez" << std::endl;
+                  return;
+              }
+          }
         board.make_move(move);
         bool check = board.isOtherKingInCheck();
 
@@ -142,8 +169,9 @@ void MainWindow::turn(int x, int y) {
           return;
         }
 
-        std::cout << "You move : " << move << std::endl;
+        //if a white pawn is going to row 8
 
+        std::cout << "You move : " << move << std::endl;
 
 
       } else {
@@ -152,14 +180,6 @@ void MainWindow::turn(int x, int y) {
         return;
       }
     } // end of "move "
-
-    else if (this->command.compare(0, 2, "go") == 0) {
-      CMove best_move = ai.find_best_move();
-
-      std::cout << "bestmove " << best_move << std::endl;
-
-      board.make_move(best_move);
-    } // end of "go"
 
     else if (this->command == "show") {
       CMoveList moves;

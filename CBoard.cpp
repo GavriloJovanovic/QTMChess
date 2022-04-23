@@ -928,10 +928,6 @@ bool CBoard::IsMoveValid(CMove &move) const {
 
       }
 
-
-
-
-
       return true;
     }
   }
