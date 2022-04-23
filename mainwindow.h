@@ -20,6 +20,7 @@ class MainWindow : public QMainWindow {
 public slots :
   void turn(int x, int y);
   void bestMove();
+  void newGame();
 
 public:
   MainWindow(QWidget *parent = nullptr);

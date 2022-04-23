@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
   connect(ui->buttonGo, &QPushButton::clicked, this, &MainWindow::bestMove);
+  connect(ui->buttonNewGame, &QPushButton::clicked, this, &MainWindow::newGame);
 }
 //! Destructor
 MainWindow::~MainWindow() { delete ui; }
@@ -182,15 +183,39 @@ void MainWindow::turn(int x, int y) {
 
     {
         QMessageBox msgBox;
-        msgBox.setText("Checkmate.");
+        QPushButton *newGameButton = msgBox.addButton(tr("New Game"), QMessageBox::ActionRole);
+        QPushButton *exitButton = msgBox.addButton(tr("Quit"), QMessageBox::NoRole);
+        QString winner = board.getSideToMove() == 1 ? QString("black") : QString("white");
+        msgBox.setText("Checkmate: " + winner + " wins.");
         msgBox.exec();
+
+        if(msgBox.clickedButton() == newGameButton) {
+            newGame();
+            return;
+        }
+
+        if(msgBox.clickedButton() == exitButton) {
+            exit(0);
+        }
     }
 
     else if(CBoard::checkmate)
     {
         QMessageBox msgBox;
-        msgBox.setText("STALEMATE");
+        QPushButton *newGameButton = msgBox.addButton(tr("New Game"), QMessageBox::ActionRole);
+        QPushButton *exitButton = msgBox.addButton(tr("Quit"), QMessageBox::NoRole);
+        msgBox.setText("Stalemate reached");
         msgBox.exec();
+
+        if(msgBox.clickedButton() == newGameButton) {
+            newGame();
+            return;
+        }
+
+        if(msgBox.clickedButton() == exitButton) {
+            exit(0);
+        }
+
     }
 }
 
@@ -199,11 +224,20 @@ void MainWindow::turn(int x, int y) {
 void MainWindow::bestMove(){
 
     CMove best_move = ai.find_best_move();
+    if(CBoard::checkmate) {
+        CBoard::checkmate = false;
+    }
+    //We don't want checkmate to be set to true here
 
     std::cout << "bestmove " << best_move << std::endl;
-
     board.make_move(best_move);
 
+    this->displayBoard();
+    refreshBoardSelect();
+}
+
+void MainWindow::newGame() {
+    board.newGame();
     this->displayBoard();
     refreshBoardSelect();
 }

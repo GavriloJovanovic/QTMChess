@@ -63,6 +63,19 @@
      <string>AI Move</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="buttonNewGame">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>840</y>
+      <width>97</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>New Game</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

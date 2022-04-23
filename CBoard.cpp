@@ -74,6 +74,8 @@ void CBoard::newGame() {
 
   m_side_to_move = 1;
   m_material = 0;
+  CBoard::checkmate = false;
+  CBoard::checkmate_check = false;
 } // end of newGame
 
 std::vector<int8_t> CBoard::getMBoard() { return this->m_board; }
@@ -804,14 +806,8 @@ void CBoard::make_move(const CMove &move) {
 
       undo_move(moves[i]);
 
-  }
-
-
-
+    }
    }
-
-
-
 } // end of void CBoard::make_move(const CMove &move)
 
 /***************************************************************
@@ -870,16 +866,17 @@ void CBoard::undo_move(const CMove &move) {
   m_board[move.m_to] = move.m_captured;
   m_side_to_move = -m_side_to_move;
 
-  if (CBoard::checkmate) {
-      CBoard::checkmate = false;
-  }
-
 } // end of void CBoard::undo_move(const CMove &move)
 
 /***************************************************************
  * IsMoveValid
  * This returns true, if the move is legal.
  ***************************************************************/
+
+int CBoard::getSideToMove() const {
+    return m_side_to_move;
+}
+
 bool CBoard::IsMoveValid(CMove &move) const {
   CMoveList moves;
   find_legal_moves(moves);

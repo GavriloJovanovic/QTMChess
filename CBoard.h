@@ -79,6 +79,7 @@ public:
   bool IsMoveValid(CMove &move) const;
   bool isKingInCheck() const;
   bool isOtherKingInCheck() const;
+  int getSideToMove() const;
   std::vector<int8_t> getMBoard();
   std::vector<int8_t> m_board;
   friend std::ostream &operator<<(std::ostream &os, const CBoard &rhs);
