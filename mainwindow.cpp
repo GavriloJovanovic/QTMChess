@@ -126,9 +126,7 @@ void MainWindow::turn(int x, int y) {
       }
 
       if (board.IsMoveValid(move)) {
-
-          if(board.getSideToMove() == 1 && move.To().row() == 8 && move.Piece() == 1) {
-              board.undo_move(move);
+          if((board.getSideToMove() == 1 && move.To().row() == 8 && move.Piece() == 1) || (board.getSideToMove() == -1 && move.To().row() == 1 && move.Piece() == -1)) {
               QStringList promotionPieces;
               promotionPieces << tr("Queen") << tr("Rook") << tr("Knight") << tr("Bishop");
               bool ok;
