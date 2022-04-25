@@ -93,8 +93,10 @@ const char *CMove::FromString(const char *s) {
       return NULL;
     }
   } else if (m_to.row() == 8) {
+    std::cout << "DING 1 " << std::endl;
     switch (tolower(s[0])) {
     case 'q':
+      std::cout << "DING" << std::endl;
       m_promoted = WQ;
       s++;
       break;
@@ -111,6 +113,7 @@ const char *CMove::FromString(const char *s) {
       s++;
       break;
     case ' ':
+      std::cout << "DING 2" << std::endl;
       break;
     case '\0':
       break;

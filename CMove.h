@@ -48,6 +48,7 @@ public:
 
   CSquare From(void) const { return m_from; }
   CSquare To(void) const { return m_to; }
+  int8_t Piece(void) const { return m_piece; }
   bool Valid(void) const { return m_captured != IV; }
   bool is_captured_piece_a_king(void) const {
     return (m_captured == WK || m_captured == BK);
