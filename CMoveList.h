@@ -13,23 +13,25 @@
  * It contains an array of moves.
  ***************************************************************/
 
-class CMoveList {
+class CMoveList
+{
 public:
-  CMoveList() {
+  CMoveList()
+  {
     // Pre-allocate space for a large number of moves.
     // This is a slight optimization.
     m_moveList.reserve(100);
   }
 
-  friend std::ostream &operator<<(std::ostream &os, const CMoveList &rhs);
+  friend std::ostream& operator<<(std::ostream& os, const CMoveList& rhs);
 
-  void push_back(const CMove &move) { m_moveList.push_back(move); }
+  void push_back(const CMove& move) { m_moveList.push_back(move); }
 
   void clear() { m_moveList.clear(); }
 
   unsigned int size() const { return m_moveList.size(); }
 
-  const CMove &operator[](unsigned int ix) const { return m_moveList[ix]; }
+  const CMove& operator[](unsigned int ix) const { return m_moveList[ix]; }
 
 private:
   std::vector<CMove> m_moveList;

@@ -3,7 +3,8 @@
 
 #include "CSquare.h"
 
-typedef enum {
+typedef enum
+{
   EM = 0,  // Empty
   WP = 1,  // White Pawn
   WN = 2,  // White Knight
@@ -24,23 +25,42 @@ typedef enum {
  * declaration of CMove
  ***************************************************************/
 
-class CMove {
+class CMove
+{
 public:
   friend class CBoard;
 
-  friend std::ostream &operator<<(std::ostream &os, const CMove &rhs);
+  friend std::ostream& operator<<(std::ostream& os, const CMove& rhs);
 
   // Constructors
-  CMove() : m_piece(IV), m_captured(IV),m_castle(false) {}
+  CMove()
+    : m_piece(IV)
+    , m_captured(IV)
+    , m_castle(false)
+  {}
 
-  CMove(const char *str) : m_captured(IV),m_castle(false) { FromString(str); }
+  CMove(const char* str)
+    : m_captured(IV)
+    , m_castle(false)
+  {
+    FromString(str);
+  }
 
-  CMove(int8_t piece, const CSquare& from, const CSquare& to, int8_t captured = EM, int8_t promoted=EM,bool castle=false) :
-      m_from(from), m_to(to), m_piece(piece), m_captured(captured), m_promoted(promoted), m_castle(castle) {}
+  CMove(int8_t piece,
+	const CSquare& from,
+	const CSquare& to,
+	int8_t captured = EM,
+	int8_t promoted = EM,
+	bool castle = false)
+    : m_from(from)
+    , m_to(to)
+    , m_piece(piece)
+    , m_captured(captured)
+    , m_promoted(promoted)
+    , m_castle(castle)
+  {}
 
-
-
-  const char *FromString(const char *s); // Returns NULL if error
+  const char* FromString(const char* s); // Returns NULL if error
 
   // Accessor functions
   std::string ToShortString() const;
@@ -50,20 +70,22 @@ public:
   CSquare To(void) const { return m_to; }
   int8_t Piece(void) const { return m_piece; }
   bool Valid(void) const { return m_captured != IV; }
-  bool is_captured_piece_a_king(void) const {
+  bool is_captured_piece_a_king(void) const
+  {
     return (m_captured == WK || m_captured == BK);
   }
   bool is_it_a_capture(void) const { return (m_captured != EM); }
-  bool operator==(const CMove &rhs) const {
+  bool operator==(const CMove& rhs) const
+  {
     if (rhs.From() != From())
       return false;
     if (rhs.To() != To())
       return false;
     return true;
   }
-  bool        m_castle;
-  static bool WK_moved,WRL_moved,WRR_moved,BK_moved,BRL_moved,BRR_moved;
-  static bool en_passant_ready,en_passant_played;
+  bool m_castle;
+  static bool WK_moved, WRL_moved, WRR_moved, BK_moved, BRL_moved, BRR_moved;
+  static bool en_passant_ready, en_passant_played;
   static int en_passant_square;
 
 private:

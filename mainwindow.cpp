@@ -3,14 +3,17 @@
 #include "ai.h"
 #include "ui_mainwindow.h"
 #include <QDir>
-#include <cstdlib>
-#include <iostream>
 #include <QInputDialog>
 #include <QStringList>
+#include <cstdlib>
+#include <iostream>
 
 //! Main loop function, that is the core of the project
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ai(board), ui(new Ui::MainWindow) {
+MainWindow::MainWindow(QWidget* parent)
+  : QMainWindow(parent)
+  , ai(board)
+  , ui(new Ui::MainWindow)
+{
   ui->setupUi(this);
 
   tabla = new QTBoard();
@@ -25,19 +28,26 @@ MainWindow::MainWindow(QWidget *parent)
       s->addItem(tabla->celije[i][j]);
       connect(tabla->celije[i][j], &QTCell::clicked, this, &MainWindow::turn);
     }
-}
+  }
   connect(ui->buttonGo, &QPushButton::clicked, this, &MainWindow::bestMove);
   connect(ui->buttonNewGame, &QPushButton::clicked, this, &MainWindow::newGame);
 }
 //! Destructor
-MainWindow::~MainWindow() { delete ui; }
+MainWindow::~MainWindow()
+{
+  delete ui;
+}
 
-void MainWindow::addToScene(QTCell *cell) {
+void
+MainWindow::addToScene(QTCell* cell)
+{
   ui->graphicsView->scene()->addItem(cell);
 }
 
 //! Method that helps out board to be unselected
-void MainWindow::refreshBoardSelect() {
+void
+MainWindow::refreshBoardSelect()
+{
   std::cout << "Refreshujem" << std::endl;
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 8; j++) {
@@ -47,7 +57,9 @@ void MainWindow::refreshBoardSelect() {
 }
 
 //! Method that is displaying the figuere on the board
-void MainWindow::displayBoard() {
+void
+MainWindow::displayBoard()
+{
   // Display board
   // We need to make a QT object for this one, but for now it's in the terminal
   std::cout << board;
@@ -57,13 +69,13 @@ void MainWindow::displayBoard() {
   QString absolute = d.absolutePath();
   std::cout << absolute.toStdString() << std::endl;
   static const std::vector<QString> adrese = {
-      "/../Figure/CrniKralj.png",   "/../Figure/CrnaKraljica.png",
-      "/../Figure/CrniTop.png",     "/../Figure/CrniLovac.png",
-      "/../Figure/CrniKonj.png",    "/../Figure/CrniPiun.png",
-      "/../Figure/PraznoPolje.png", "/../Figure/BeliPiun.png",
-      "/../Figure/BeliKonj.png",    "/../Figure/BeliLovac.png",
-      "/../Figure/BeliTop.png",     "/../Figure/BelaKraljica.png",
-      "/../Figure/BeliKralj.png"
+    "/../Figure/CrniKralj.png",	  "/../Figure/CrnaKraljica.png",
+    "/../Figure/CrniTop.png",	  "/../Figure/CrniLovac.png",
+    "/../Figure/CrniKonj.png",	  "/../Figure/CrniPiun.png",
+    "/../Figure/PraznoPolje.png", "/../Figure/BeliPiun.png",
+    "/../Figure/BeliKonj.png",	  "/../Figure/BeliLovac.png",
+    "/../Figure/BeliTop.png",	  "/../Figure/BelaKraljica.png",
+    "/../Figure/BeliKralj.png"
 
   };
   std::vector<int8_t> boardTable = board.getMBoard();
@@ -72,17 +84,21 @@ void MainWindow::displayBoard() {
       int number = (col + 1) * 10 + row;
       int piece = board.m_board[number];
       if (piece != IV) {
-        //std::cout << (absolute + adrese[piece + 6]).toStdString() << std::endl;
-        this->tabla->celije[row - 1][col2 - 1]->setPicture(absolute +
-                                                           adrese[piece + 6]);
+	// std::cout << (absolute + adrese[piece + 6]).toStdString() <<
+	// std::endl;
+	this->tabla->celije[row - 1][col2 - 1]->setPicture(absolute +
+							   adrese[piece + 6]);
       }
     }
     std::cout << std::endl;
   }
 }
 
-//! Main core function of out project that we took from the open source project, it is the main function that is the infinite loop of players choices
-void MainWindow::turn(int x, int y) {
+//! Main core function of out project that we took from the open source project,
+//! it is the main function that is the infinite loop of players choices
+void
+MainWindow::turn(int x, int y)
+{
   // We shall convert the input of QString
   /*
        std::string str;
@@ -90,11 +106,7 @@ void MainWindow::turn(int x, int y) {
        std::cout << std::endl;
   */
 
-
-
-
   if (num_click == 0) {
-
 
     x1 = vertical[x];
     y1 = 8 - y;
@@ -119,63 +131,73 @@ void MainWindow::turn(int x, int y) {
       CMove move;
 
       if (move.FromString(this->command.c_str() + 5) == NULL) {
-        // Could not parse move.
-        std::cout << "Try again. Use long notation, e.g. e2e4" << std::endl;
-        refreshBoardSelect();
-        return; // Go back to beginning
+	// Could not parse move.
+	std::cout << "Try again. Use long notation, e.g. e2e4" << std::endl;
+	refreshBoardSelect();
+	return; // Go back to beginning
       }
 
       if (board.IsMoveValid(move)) {
-          if((board.getSideToMove() == 1 && move.To().row() == 8 && move.Piece() == 1) || (board.getSideToMove() == -1 && move.To().row() == 1 && move.Piece() == -1)) {
-              QStringList promotionPieces;
-              promotionPieces << tr("Queen") << tr("Rook") << tr("Knight") << tr("Bishop");
-              bool ok;
-              QString piece = QInputDialog::getItem(this, tr("Promotion"), tr("Select piece to promote to:"), promotionPieces, 0, false, &ok);
-              char piece_std = piece.toStdString().c_str()[0];
-              std::string piece_mv;
-              switch(piece_std){
-                  case 'Q':
-                      piece_mv = 'q';
-                      break;
-                  case 'R':
-                      piece_mv = 'r';
-                      break;
-                  case 'K':
-                      piece_mv = 'n';
-                      break;
-                  case 'B':
-                      piece_mv = 'b';
-                      break;
-                  default:
-                      piece_mv = '0';
-              }
+	if ((board.getSideToMove() == 1 && move.To().row() == 8 &&
+	     move.Piece() == 1) ||
+	    (board.getSideToMove() == -1 && move.To().row() == 1 &&
+	     move.Piece() == -1)) {
+	  QStringList promotionPieces;
+	  promotionPieces << tr("Queen") << tr("Rook") << tr("Knight")
+			  << tr("Bishop");
+	  bool ok;
+	  QString piece =
+	    QInputDialog::getItem(this,
+				  tr("Promotion"),
+				  tr("Select piece to promote to:"),
+				  promotionPieces,
+				  0,
+				  false,
+				  &ok);
+	  char piece_std = piece.toStdString().c_str()[0];
+	  std::string piece_mv;
+	  switch (piece_std) {
+	    case 'Q':
+	      piece_mv = 'q';
+	      break;
+	    case 'R':
+	      piece_mv = 'r';
+	      break;
+	    case 'K':
+	      piece_mv = 'n';
+	      break;
+	    case 'B':
+	      piece_mv = 'b';
+	      break;
+	    default:
+	      piece_mv = '0';
+	  }
 
-              this->command += piece_mv;
-              std::cout << this->command << std::endl;
-              if(move.FromString(this->command.c_str() + 5) == NULL){
-                  std::cout << "ne valja potez" << std::endl;
-                  return;
-              }
-          }
-        board.make_move(move);
-        bool check = board.isOtherKingInCheck();
+	  this->command += piece_mv;
+	  std::cout << this->command << std::endl;
+	  if (move.FromString(this->command.c_str() + 5) == NULL) {
+	    std::cout << "ne valja potez" << std::endl;
+	    return;
+	  }
+	}
+	board.make_move(move);
+	bool check = board.isOtherKingInCheck();
 
-        if (check) {
-          board.undo_move(move);
-          std::cout << "You are in CHECK. Play another move." << std::endl;
-          refreshBoardSelect();
-          return;
-        }
+	if (check) {
+	  board.undo_move(move);
+	  std::cout << "You are in CHECK. Play another move." << std::endl;
+	  refreshBoardSelect();
+	  return;
+	}
 
-        //if a white pawn is going to row 8
+	// if a white pawn is going to row 8
 
-        std::cout << "You move : " << move << std::endl;
-
+	std::cout << "You move : " << move << std::endl;
 
       } else {
-        std::cout << "Move " << move << " is not legal." << std::endl;
-        refreshBoardSelect();
-        return;
+	std::cout << "Move " << move << " is not legal." << std::endl;
+	refreshBoardSelect();
+	return;
       }
     } // end of "move "
 
@@ -197,65 +219,72 @@ void MainWindow::turn(int x, int y) {
     this->displayBoard();
     refreshBoardSelect();
 
-    if (CBoard::checkmate && (board.isKingInCheck() || board.isOtherKingInCheck()))
+    if (CBoard::checkmate &&
+	(board.isKingInCheck() || board.isOtherKingInCheck()))
 
     {
-        QMessageBox msgBox;
-        QPushButton *newGameButton = msgBox.addButton(tr("New Game"), QMessageBox::ActionRole);
-        QPushButton *exitButton = msgBox.addButton(tr("Quit"), QMessageBox::NoRole);
-        QString winner = board.getSideToMove() == 1 ? QString("black") : QString("white");
-        msgBox.setText("Checkmate: " + winner + " wins.");
-        msgBox.exec();
+      QMessageBox msgBox;
+      QPushButton* newGameButton =
+	msgBox.addButton(tr("New Game"), QMessageBox::ActionRole);
+      QPushButton* exitButton =
+	msgBox.addButton(tr("Quit"), QMessageBox::NoRole);
+      QString winner =
+	board.getSideToMove() == 1 ? QString("black") : QString("white");
+      msgBox.setText("Checkmate: " + winner + " wins.");
+      msgBox.exec();
 
-        if(msgBox.clickedButton() == newGameButton) {
-            newGame();
-            return;
-        }
+      if (msgBox.clickedButton() == newGameButton) {
+	newGame();
+	return;
+      }
 
-        if(msgBox.clickedButton() == exitButton) {
-            exit(0);
-        }
+      if (msgBox.clickedButton() == exitButton) {
+	exit(0);
+      }
     }
 
-    else if(CBoard::checkmate)
-    {
-        QMessageBox msgBox;
-        QPushButton *newGameButton = msgBox.addButton(tr("New Game"), QMessageBox::ActionRole);
-        QPushButton *exitButton = msgBox.addButton(tr("Quit"), QMessageBox::NoRole);
-        msgBox.setText("Stalemate reached");
-        msgBox.exec();
+    else if (CBoard::checkmate) {
+      QMessageBox msgBox;
+      QPushButton* newGameButton =
+	msgBox.addButton(tr("New Game"), QMessageBox::ActionRole);
+      QPushButton* exitButton =
+	msgBox.addButton(tr("Quit"), QMessageBox::NoRole);
+      msgBox.setText("Stalemate reached");
+      msgBox.exec();
 
-        if(msgBox.clickedButton() == newGameButton) {
-            newGame();
-            return;
-        }
+      if (msgBox.clickedButton() == newGameButton) {
+	newGame();
+	return;
+      }
 
-        if(msgBox.clickedButton() == exitButton) {
-            exit(0);
-        }
-
+      if (msgBox.clickedButton() == exitButton) {
+	exit(0);
+      }
     }
+  }
 }
 
+void
+MainWindow::bestMove()
+{
+
+  CMove best_move = ai.find_best_move();
+  if (CBoard::checkmate) {
+    CBoard::checkmate = false;
+  }
+  // We don't want checkmate to be set to true here
+
+  std::cout << "bestmove " << best_move << std::endl;
+  board.make_move(best_move);
+
+  this->displayBoard();
+  refreshBoardSelect();
 }
 
-void MainWindow::bestMove(){
-
-    CMove best_move = ai.find_best_move();
-    if(CBoard::checkmate) {
-        CBoard::checkmate = false;
-    }
-    //We don't want checkmate to be set to true here
-
-    std::cout << "bestmove " << best_move << std::endl;
-    board.make_move(best_move);
-
-    this->displayBoard();
-    refreshBoardSelect();
-}
-
-void MainWindow::newGame() {
-    board.newGame();
-    this->displayBoard();
-    refreshBoardSelect();
+void
+MainWindow::newGame()
+{
+  board.newGame();
+  this->displayBoard();
+  refreshBoardSelect();
 }

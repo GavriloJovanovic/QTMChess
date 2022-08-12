@@ -6,7 +6,8 @@
 
 // Useful enumerations to conveniently address specific squares on the board
 enum // Squares
-{ A8 = 91,
+{
+  A8 = 91,
   B8,
   C8,
   D8,
@@ -80,22 +81,27 @@ enum // Squares
  * and a (column,row) representation.
  ***************************************************************/
 
-class CSquare {
+class CSquare
+{
 public:
-  CSquare(uint32_t square = 0) : m_sq(square) {}
+  CSquare(uint32_t square = 0)
+    : m_sq(square)
+  {}
 
   operator int() const { return m_sq; } // Implicit conversion to integer
 
   int row() const { return (m_sq / 10) - 1; } // returns 1 - 8
   int col() const { return (m_sq % 10); }     // returns 1 - 8
 
-  friend std::ostream &operator<<(std::ostream &os, const CSquare &rhs) {
+  friend std::ostream& operator<<(std::ostream& os, const CSquare& rhs)
+  {
     char c = (rhs.m_sq % 10) + 'a' - 1;
     char r = (rhs.m_sq / 10) + '1' - 2;
     return os << c << r;
   }
 
-  int FromString(const char *s) {
+  int FromString(const char* s)
+  {
     uint32_t col = s[0] - 'a';
     uint32_t row = s[1] - '1';
     m_sq = row * 10 + col + 21;
@@ -105,6 +111,6 @@ public:
 
 private:
   uint8_t m_sq; // Internal representation, 0 - 119.
-};              /* end of class CSquare */
+};		/* end of class CSquare */
 
 #endif // _C_SQUARE_H_

@@ -23,10 +23,12 @@
  * * 900+, if the opponent is check-mated.
  * * -999, if the side to move is check-mated.
  **=************************************************************/
-int AI::search(int alpha, int beta, int level) {
+int
+AI::search(int alpha, int beta, int level)
+{
   if (level == 0)
     return m_board
-        .get_value(); // We are at leaf, just return the static evaluation.
+      .get_value(); // We are at leaf, just return the static evaluation.
 
   CMoveList moves;
   m_board.find_legal_moves(moves);
@@ -46,10 +48,10 @@ int AI::search(int alpha, int beta, int level) {
       alpha = best_val;
     }
 
-    const CMove &move = moves[i];
+    const CMove& move = moves[i];
     if (move.is_captured_piece_a_king()) {
       return 900 + level; // Opponent's king can be captured. That means he is
-                          // check-mated.
+			  // check-mated.
     }
 
     // Do a recursive search
@@ -73,12 +75,15 @@ int AI::search(int alpha, int beta, int level) {
  * It returns what it considers to be the best legal move in the
  * current position.
  ***************************************************************/
-CMove AI::find_best_move() {
+CMove
+AI::find_best_move()
+{
   // Make a list of all legal moves
   CMoveList moves;
   m_board.find_legal_moves(moves);
 
-  //std::cout << "info string " << moves.size() << " legal moves." << std::endl;
+  // std::cout << "info string " << moves.size() << " legal moves." <<
+  // std::endl;
 
   CMoveList best_moves; // Array of the (one or more) best moves so far
   int best_val = -999;
@@ -92,9 +97,9 @@ CMove AI::find_best_move() {
     int val = -search(-999, 999, 4);
     m_board.undo_move(move);
 
-    //std::cout << "info string " << val << " : " << move << std::endl;
+    // std::cout << "info string " << val << " : " << move << std::endl;
     /*if(CBoard::checkmate) {
-        std::cout << "CHECKMATE" << std::endl;
+	std::cout << "CHECKMATE" << std::endl;
     }*/
 
     if (val > best_val) {

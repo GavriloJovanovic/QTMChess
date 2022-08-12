@@ -1,8 +1,11 @@
 #include "CMoveList.h"
 
-std::ostream &operator<<(std::ostream &os, const CMoveList &rhs) {
+std::ostream&
+operator<<(std::ostream& os, const CMoveList& rhs)
+{
   for (std::vector<CMove>::const_iterator it = rhs.m_moveList.begin();
-       it != rhs.m_moveList.end(); ++it) {
+       it != rhs.m_moveList.end();
+       ++it) {
     os << (*it).ToShortString() << " ";
   }
 
