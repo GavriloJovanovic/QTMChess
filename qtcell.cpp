@@ -9,7 +9,9 @@
 #include <iostream>
 
 QTCell::QTCell(QGraphicsObject *parent, int x, int y)
-    : QGraphicsObject(parent), x(x), y(y) {}
+    : QGraphicsObject(parent), x(x), y(y) {
+    this->picture = QPixmap();
+}
 
 //! Defenition of size for each cell
 QRectF QTCell::boundingRect() const { return QRectF(0, 0, 80, 80); }
@@ -21,7 +23,7 @@ void QTCell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
   Q_UNUSED(widget);
   painter->setBrush(color);
   painter->drawRect(0, 0, 80, 80);
-  painter->drawPixmap(0, 0, picture->width(), picture->height(), *picture);
+  painter->drawPixmap(0, 0, picture.width(), picture.height(), picture);
   if (this->number != '0') {
     painter->setPen(Qt::red);
     painter->setFont(QFont("Segoe UI", 16));
@@ -36,8 +38,7 @@ void QTCell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
 //!Method that puts figures on the positon
 void QTCell::setPicture(QString imageAdress) { // NAPRAVI DELEETE
-  delete this->picture;
-  this->picture = new QPixmap(imageAdress);
+  this->picture.load(imageAdress);
   this->update();
 }
 /*
