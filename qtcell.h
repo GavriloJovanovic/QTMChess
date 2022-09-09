@@ -39,7 +39,7 @@ public:
   //! Position of our cell
   int x, y;
   //! Picture that is attached to certan cell
-  QPixmap *picture = nullptr;
+  QPixmap picture;
   ~QTCell() {}
 
 private:
