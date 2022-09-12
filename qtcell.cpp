@@ -9,7 +9,9 @@
 #include <iostream>
 
 QTCell::QTCell(QGraphicsObject *parent, int x, int y)
-    : QGraphicsObject(parent), x(x), y(y) {}
+    : QGraphicsObject(parent), x(x), y(y) {
+    this->picture = QPixmap();
+}
 
 //! Defenition of size for each cell
 QRectF QTCell::boundingRect() const { return QRectF(0, 0, 80, 80); }
