@@ -8,38 +8,51 @@
 #include <QStyleOption>
 #include <iostream>
 
-QTCell::QTCell(QGraphicsObject *parent, int x, int y)
-    : QGraphicsObject(parent), x(x), y(y) {
-    this->picture = QPixmap();
+QTCell::QTCell(QGraphicsObject* parent, int x, int y)
+  : QGraphicsObject(parent)
+  , x(x)
+  , y(y)
+{
+    this->picture= QPixmap();
 }
 
 //! Defenition of size for each cell
-QRectF QTCell::boundingRect() const { return QRectF(0, 0, 80, 80); }
-
-//! Painting each cell on it's own position acordingly
-void QTCell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-                   QWidget *widget) {
-  Q_UNUSED(option);
-  Q_UNUSED(widget);
-  painter->setBrush(color);
-  painter->drawRect(0, 0, 80, 80);
-  painter->drawPixmap(0, 0, picture.width(), picture.height(), picture);
-  if (this->number != '0') {
-    painter->setPen(Qt::red);
-    painter->setFont(QFont("Segoe UI", 16));
-    painter->drawText(15, 15, QString(this->number));
-
-    //        NumberKnight* tmp = new NumberKnight(1);
-    //        tmp->setPixmap(number);
-    //        tmp->drawNumberKnight();
-    //        this->receiveUnit(tmp);
-  }
+QRectF
+QTCell::boundingRect() const
+{
+    return QRectF(0, 0, 80, 80);
 }
 
-//!Method that puts figures on the positon
-void QTCell::setPicture(const QString & imageAdress) { // NAPRAVI DELEETE
-  this->picture.load(imageAdress);
-  this->update();
+//! Painting each cell on it's own position acordingly
+void
+QTCell::paint(QPainter* painter,
+	      const QStyleOptionGraphicsItem* option,
+	      QWidget* widget)
+{
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+    painter->setBrush(color);
+    painter->drawRect(0, 0, 80, 80);
+    painter->drawPixmap(0, 0, picture.width(), picture.height(), picture);
+    if (this->number != '0') {
+	painter->setPen(Qt::red);
+	painter->setFont(QFont("Segoe UI", 16));
+	painter->drawText(15, 15, QString(this->number));
+
+	//        NumberKnight* tmp = new NumberKnight(1);
+	//        tmp->setPixmap(number);
+	//        tmp->drawNumberKnight();
+	//        this->receiveUnit(tmp);
+    }
+}
+
+
+//! Method that puts figures on the positon
+void
+QTCell::setPicture(const QString & imageAdress)
+{ // NAPRAVI DELEETE
+    this->picture.load(imageAdress);
+    this->update();
 }
 /*
 void Celija::MousePressEvent(QGraphicsSceneMouseEvent * event)
@@ -47,9 +60,9 @@ void Celija::MousePressEvent(QGraphicsSceneMouseEvent * event)
     Q_UNUSED(event)
 
     if (color == Qt::red)
-        color = originalColor;
+	color = originalColor;
     else
-        color = Qt::red;
+	color = Qt::red;
     this->update();
     std::cout << "Pozicija: " << this->x << " " << this->y << std::endl;
     emit clicked();
@@ -57,38 +70,45 @@ void Celija::MousePressEvent(QGraphicsSceneMouseEvent * event)
 */
 
 //! What is happening when we click on the cell in exact postion
-bool QTCell::event(QEvent *ev) {
-  if (ev->type() == QEvent::GraphicsSceneMousePress) {
-    if (color == Qt::red) {
-      color = originalColor;
-    } else
-      color = Qt::red;
-    this->update();
+bool
+QTCell::event(QEvent* ev)
+{
+    if (ev->type() == QEvent::GraphicsSceneMousePress) {
+	if (color == Qt::red) {
+	    color= originalColor;
+	} else
+	    color= Qt::red;
+	this->update();
 
-    emit clicked(this->x, this->y);
+	emit clicked(this->x, this->y);
+	return true;
+    }
+    // Make sure the rest of events are handled
+    // FIX
+
     return true;
-  }
-  // Make sure the rest of events are handled
-  // FIX
-
-  return true;
 }
 
-//! Method for seting color
-void QTCell::setColor(QColor color) {
-  this->color = std::move(color);
-  this->update();
+void
+QTCell::setColor(QColor color)
+{
+    this->color= std::move(color);
+    this->update();
 }
-
 
 //! Revert to original color of each cells, it's eather gray or white
-void QTCell::setOriginalColor(QColor originalColor) {
-  this->originalColor = std::move(originalColor);
-  this->update();
+
+void
+QTCell::setOriginalColor(QColor originalColor)
+{
+    this->originalColor= std::move(originalColor);
+    this->update();
 }
 
 //! Refresh cell to it's original color
-void QTCell::refresh() {
-  this->color = this->originalColor;
-  this->update();
+void
+QTCell::refresh()
+{
+    this->color= this->originalColor;
+    this->update();
 }
