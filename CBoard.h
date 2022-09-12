@@ -45,22 +45,22 @@
 
 enum // Directions
 {
-  N = 10,
-  S = -10,
-  E = -1,
-  W = 1,
-  NW = 11,
-  SW = -9,
-  NE = 9,
-  SE = -11,
-  NNW = 21,
-  NNE = 19,
-  NWW = 12,
-  NEE = 8,
-  SSW = -19,
-  SSE = -21,
-  SWW = -8,
-  SEE = -12
+    N= 10,
+    S= -10,
+    E= -1,
+    W= 1,
+    NW= 11,
+    SW= -9,
+    NE= 9,
+    SE= -11,
+    NNW= 21,
+    NNE= 19,
+    NWW= 12,
+    NEE= 8,
+    SSW= -19,
+    SSE= -21,
+    SWW= -8,
+    SEE= -12
 };
 
 /***************************************************************
@@ -68,33 +68,33 @@ enum // Directions
  ***************************************************************/
 class CBoard
 {
-public:
-  CBoard() { newGame(); }
+  public:
+    CBoard() { newGame(); }
 
-  // Copy constructor
-  CBoard(const CBoard& rhs);
+    // Copy constructor
+    CBoard(const CBoard& rhs);
 
-  void newGame();
-  void find_legal_moves(CMoveList& moves) const;
-  void make_move(const CMove& move);
-  void undo_move(const CMove& move);
-  int get_value();
-  bool IsMoveValid(CMove& move) const;
-  bool isKingInCheck() const;
-  bool isOtherKingInCheck() const;
-  int getSideToMove() const;
-  std::vector<int8_t> getMBoard();
-  std::vector<int8_t> m_board;
-  friend std::ostream& operator<<(std::ostream& os, const CBoard& rhs);
+    void newGame();
+    void find_legal_moves(CMoveList& moves) const;
+    void make_move(const CMove& move);
+    void undo_move(const CMove& move);
+    int get_value();
+    bool IsMoveValid(CMove& move) const;
+    bool isKingInCheck() const;
+    bool isOtherKingInCheck() const;
+    int getSideToMove() const;
+    std::vector<int8_t> getMBoard();
+    std::vector<int8_t> m_board;
+    friend std::ostream& operator<<(std::ostream& os, const CBoard& rhs);
 
-  static bool checkmate_check, checkmate;
+    static bool checkmate_check, checkmate;
 
-private:
-  bool isSquareThreatened(const CSquare& sq) const;
-  void swap_sides() { m_side_to_move = -m_side_to_move; }
+  private:
+    bool isSquareThreatened(const CSquare& sq) const;
+    void swap_sides() { m_side_to_move= -m_side_to_move; }
 
-  int m_side_to_move;
-  int m_material;
+    int m_side_to_move;
+    int m_material;
 
 }; // end of class CBoard
 
