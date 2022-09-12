@@ -20,7 +20,7 @@ class QTCell : public QGraphicsObject
     Q_SLOT
       :
       // void MousePressEvent(QGraphicsSceneMouseEvent * event);
-      event(QEvent* ev) override;
+      bool event(QEvent* ev) override;
 
   public:
     QTCell(QGraphicsObject* parent, int i, int j);
