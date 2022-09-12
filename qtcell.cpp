@@ -46,9 +46,10 @@ QTCell::paint(QPainter* painter,
     }
 }
 
+
 //! Method that puts figures on the positon
 void
-QTCell::setPicture(QString imageAdress)
+QTCell::setPicture(const QString & imageAdress)
 { // NAPRAVI DELEETE
     this->picture.load(imageAdress);
     this->update();
@@ -88,19 +89,19 @@ QTCell::event(QEvent* ev)
     return true;
 }
 
-//! Method for seting color
 void
 QTCell::setColor(QColor color)
 {
-    this->color= color;
+    this->color= std::move(color);
     this->update();
 }
 
 //! Revert to original color of each cells, it's eather gray or white
+
 void
 QTCell::setOriginalColor(QColor originalColor)
 {
-    this->originalColor= originalColor;
+    this->originalColor= std::move(originalColor);
     this->update();
 }
 

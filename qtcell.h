@@ -20,8 +20,6 @@ class QTCell : public QGraphicsObject
     Q_SLOT
       :
       // void MousePressEvent(QGraphicsSceneMouseEvent * event);
-
-      bool
       event(QEvent* ev) override;
 
   public:
@@ -37,7 +35,7 @@ class QTCell : public QGraphicsObject
     //! Lentht of each cell
     static qint32 cellSideLen() { return 96; }
     char number{ '0' };
-    void setPicture(QString imageAdress);
+    void setPicture(const QString & imageAdress);
     void refresh();
     //! Position of our cell
     int x, y;
