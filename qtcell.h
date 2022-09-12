@@ -34,12 +34,12 @@ public:
   //! Lentht of each cell
   static qint32 cellSideLen() { return 96; }
   char number{'0'};
-  void setPicture(QString imageAdress);
+  void setPicture(const QString & imageAdress);
   void refresh();
   //! Position of our cell
   int x, y;
   //! Picture that is attached to certan cell
-  QPixmap *picture = nullptr;
+  QPixmap picture;
   ~QTCell() {}
 
 private:

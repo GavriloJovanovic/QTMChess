@@ -21,7 +21,7 @@ void QTCell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
   Q_UNUSED(widget);
   painter->setBrush(color);
   painter->drawRect(0, 0, 80, 80);
-  painter->drawPixmap(0, 0, picture->width(), picture->height(), *picture);
+  painter->drawPixmap(0, 0, picture.width(), picture.height(), picture);
   if (this->number != '0') {
     painter->setPen(Qt::red);
     painter->setFont(QFont("Segoe UI", 16));
@@ -35,9 +35,8 @@ void QTCell::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 }
 
 //!Method that puts figures on the positon
-void QTCell::setPicture(QString imageAdress) { // NAPRAVI DELEETE
-  delete this->picture;
-  this->picture = new QPixmap(imageAdress);
+void QTCell::setPicture(const QString & imageAdress) { // NAPRAVI DELEETE
+  this->picture.load(imageAdress);
   this->update();
 }
 /*
@@ -75,14 +74,14 @@ bool QTCell::event(QEvent *ev) {
 
 //! Method for seting color
 void QTCell::setColor(QColor color) {
-  this->color = color;
+  this->color = std::move(color);
   this->update();
 }
 
 
 //! Revert to original color of each cells, it's eather gray or white
 void QTCell::setOriginalColor(QColor originalColor) {
-  this->originalColor = originalColor;
+  this->originalColor = std::move(originalColor);
   this->update();
 }
 

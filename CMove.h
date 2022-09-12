@@ -52,12 +52,12 @@ public:
 	int8_t captured = EM,
 	int8_t promoted = EM,
 	bool castle = false)
-    : m_from(from)
+    : m_castle(castle)
+    , m_from(from)
     , m_to(to)
     , m_piece(piece)
     , m_captured(captured)
     , m_promoted(promoted)
-    , m_castle(castle)
   {}
 
   const char* FromString(const char* s); // Returns NULL if error
